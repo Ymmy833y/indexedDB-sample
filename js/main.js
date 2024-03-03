@@ -26,6 +26,8 @@ const generateTableCell = (text, tagName="th") => {
 }
 
 const userDB = new UserDB();
+const itemDB = new ItemDB();
+new IndexedDB().initDB([userDB.setUpDB(), itemDB.setUpDB()]);
 
 window.addEventListener("DOMContentLoaded", () => {
 

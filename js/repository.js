@@ -42,3 +42,17 @@ class User {
     }
   }
 }
+
+
+class Item {
+  constructor(row) {
+    if (row !== undefined) {
+      this.setRow(row);
+    }
+  }
+
+  setRow(row) {
+    if (row.id !== undefined) this.id = row.id;
+    this.name = row.name;
+  }
+}

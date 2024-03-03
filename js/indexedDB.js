@@ -158,6 +158,23 @@ class IndexedDB {
       }
     });
   }
+
+
+  /**
+   * @param {{init, db}[]} setUpDBList 
+   */
+  initDB(setUpDBList) {
+    this.conect().onupgradeneeded = (event) => {
+      setUpDBList.forEach(v => {
+        console.log(v);
+        v.init.call(v.db, event);
+      });
+    }
+  }
+
+  setUpDB() {
+    return { init: this.initDB, db: this };
+  }
 }
 
 class UserDB extends IndexedDB {
@@ -165,22 +182,36 @@ class UserDB extends IndexedDB {
   entity = User;
   constructor() {
     super();
-
-    this.#initDB();
   }
 
-  #initDB() {
-    this.conect().onupgradeneeded = (event) => {
-      const db = event.target.result;
-      
-      const objectStore = db.createObjectStore(this.STORE_NAME, {
-        keyPath: "id",
-        autoIncrement: true,
-      });
-      objectStore.createIndex("name", "name");
-      objectStore.createIndex("birthday", "birthday");
-      objectStore.createIndex("hobby", "hobby", { multiEntry: true });
-    }
+  initDB(event) {
+    const db = event.target.result;
+    
+    const objectStore = db.createObjectStore(this.STORE_NAME, {
+      keyPath: "id",
+      autoIncrement: true,
+    });
+    objectStore.createIndex("name", "name");
+    objectStore.createIndex("birthday", "birthday");
+    objectStore.createIndex("hobby", "hobby", { multiEntry: true });
   }
 }
 
+
+class ItemDB extends IndexedDB {
+  STORE_NAME = "item";
+  entity = Item;
+  constructor() {
+    super();
+  }
+
+  initDB(event) {
+    const db = event.target.result;
+    
+    const objectStore = db.createObjectStore(this.STORE_NAME, {
+      keyPath: "id",
+      autoIncrement: true,
+    });
+    objectStore.createIndex("name", "name");
+  }
+}
