@@ -8,4 +8,4 @@ IndexedDBのサンプル。
 
 基本的な機能は網羅しているはず。。。
 
-[preview](https://ymmy833y.github.io/IndexedDBSample/)
+[preview](https://ymmy833y.github.io/indexedDB-sample/)
